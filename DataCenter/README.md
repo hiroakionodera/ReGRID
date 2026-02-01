@@ -1,68 +1,75 @@
-# ReGRID Model
-
-### Energy System Optimization Model for Regional Grid Integration and Decarbonization
-
-Key features
-- Covers all 1,741 municipalities across Japan.
-- Simultaneously optimizes regional capacity planning and spatio-temporal operation for:
-  Power generation, Energy storage, Transmission networks, Hydrogen technologies, Carbon removal technologies.
-- Can be soft-linked with integrated assessment models (IAMs) to design energy systems aligned with diverse socioeconomic and emissions pathways.
-- Cost-minimization based on linear programming.
-
-Model description is provided in [Wiki](https://github.com/hiroakionodera/ReGRID/wiki).
+# Strategic data center siting can mitigate dilemmas between decarbonization and digitalization
 
 <br>
 
 # Structure
-The model is organized into the following Python modules written in Jupyter Notebook:
-
 | File              | Description | Depends on |
 |-------------------|-------------|-------------|
-| `model.ipynb`       | Optimizes energy system snapshots for the target year.|-|
-| `model_DC.ipynb`       | Customized code of `model.ipynb` for the data center siting strategies.|-|
-| `analysis_system.ipynb`       | Evaluates and visualizes energy system configurations.|`model.ipynb`|
-| `analysis_transition.ipynb`       | Visualizes energy system transitions over time.|`model.ipynb`, `analysis_system.ipynb`|
-| `analysis_DClocation.ipynb`       | Evaluates the economic impact of data center addition.|`model.ipynb` (Dual variables)|
-| `analysis_DCstrategy.ipynb`       | Assesses data center siting strategies.|`model.ipynb`, `analysis_system.ipynb`, `analysis_DClocation.ipynb`|
+| `model.py`       | Optimizes energy system snapshots for the target year.|-|
+| `analysis_system.ipynb`       | Evaluates and visualizes energy system configurations.|`model.py`|
+| `analysis_transition.ipynb`       | Visualizes energy system transitions over time.|`model.py`, `analysis_system.ipynb`|
+| `analysis_DClocation.ipynb`       | Evaluates the economic impact of data center addition.|`model.py` (Dual variables)|
+| `analysis_DCstrategy.ipynb`       | Assesses data center siting strategies.|`model.py`, `analysis_system.ipynb`, `analysis_DClocation.ipynb`|
 
 <br>
 
-# Requirements
-### Base environment
-- Python 3.8+
-
-### Model
-- `gurobipy`: To solve optimization problem (Tested on version 12.0)
-- `pandas`, `numpy`, `tqdm`: For data handling and managing processing
-
-### Analysis
-- `matplotlib`: To draw charts
-- `cartopy`: To visualize maps
-- `networkx`: To visualize grid networks
-
+# Data repository
+Input data are available at:
+https://zonode.org/records/xxxxxxxx (to be available after paper publication).
 
 <br>
 
-# How to Run
-1. Prepare input CSV files under the input/ directory.
-2. Execute model.ipynb in a notebook environment (VSCode recommended).
-   It should be executed recursively every 10 years (2020, 2030, 2040, and 2050).
-3. Run the analysis notebooks according to the dependencies described in **Structure**.
+# Model features
 
-Note:
-- Full-scale optimization (1,741 nodes, 6-hourly resolution for one year) requires approximately 10–30 hours, depending on computational resources.
-- Example: ~10 hours using Intel Core-i9 14900KS (up to 6.2 GHz).
-- At least 80 GB of RAM is recommended for stable execution.
-- model.ipynb outputs:
-  - Primal optimal solutions (~1 GB)
-  - Dual optimal solutions (~1.5 GB)
-  (Note: These files are too large to open with standard spreadsheet software such as MS Excel.)
-- All results are saved under output/<model_name>/.
+## Electricity balance constraints
 
+Add a new end-user (here, data centers) electricity demand term to the right-hand side. The electricity demand term is given by the product of the decision variable load capacity ($W_r^{\text{DC}}$) and the time-specific static capacity factor ($l'_{r,t}$).
+
+$$
+\sum_{g \in \text{VRE}} (h_{r,g,t} \cdot W_{r,g}) +
+\sum_{g \in \text{DG}} P_{r,g,t} +
+\sum_{r'} T_{r,r',t}^+ +
+\sum_{g \in \text{ST}} S_{r,g,t}^- 
+= d_{r,t} +
+D_{r,t}^{\text{DAC}} +
+D_{r,t}^{\text{P2G}} +
+\sum_{r'} T_{r,r',t}^- +
+\sum_{g \in \text{ST}} S_{r,g,t}^+ +
+R_{r,t} +
+l'_{r,t} \cdot W_r^{\text{DC}}
+\quad \forall r,t
+$$
 
 <br>
 
-# Publications
-1. Hiroaki Onodera et al.; 2024. The role of regional renewable energy integration in electricity decarbonization—A case study of Japan. Applied Energy.
-[https://doi.org/10.1016/j.apenergy.2024.123118](https://doi.org/10.1016/j.apenergy.2024.123118) (ReGRID model was originally developed as a part of this research.)
-2. Hiroaki Onodera et al.; Strategic data center siting can mitigate dilemmas between digitalization and decarbonization. (In preparation)
+## Data center siting strategy
+
+For each siting strategy, add constraints that specify the data center load capacity in each node.
+
+**BAU strategy**: Data centers area located according to existing distribution.
+
+$$
+W_r^{\text{DC}} = a \cdot \frac{w_r}{\sum_{n \in R}{w_n}}
+$$
+
+$a$: Nationwide total capacity of data centers, $w$: Existing capacity of data centers.
+
+**DEV and ILA strategies**: Nationwide total capacity of data centers ($a$) is a given, and the existing capacity is the lower bound of capacity at each regional node.
+
+$$
+\sum_{r}{W_r^{\text{DC}}} = a
+$$
+
+$$
+{W_r^{\text{DC}}} \geqq w_r
+$$
+
+**ILA strategy**: The capacity of data centers at each node is capped based on integrated location assessment.
+
+$$
+W_r^{\text{DC}} \leqq w_r^{max}
+$$
+
+$w_r^{max}$: Maximum capacity of data cneters in node $r$.
+
+(Full model description is available at [Wiki](https://github.com/hiroakionodera/ReGRID/wiki).)

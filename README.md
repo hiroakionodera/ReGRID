@@ -16,7 +16,7 @@ Model description is provided in [Wiki](https://github.com/hiroakionodera/ReGRID
 # Applications
 | Directory | Publication | Key extension |
 |---------|------------|---------------|
-| DataCenter | Strategic data center siting can mitigate the dilemmas between decarbonization and digitalization (Under review) | Endogenizes the spatial siting of electricity-intensive end users within the energy transition. Quantifies marginal grid costs of end users. |
+| DataCenter | Strategic data center siting can mitigate dilemmas between digitalization and decarbonization (Under review) | Endogenizes the spatial siting of electricity-intensive end users within the energy transition. Quantifies marginal grid costs of end users. |
 | Conservation | Spatial strategies for reconciling area-based conservation and renewable energy transition in Japan. (In preparation) | Optimizes renewable energy deployment under area-based conservation constraints. |
 
 <br>
