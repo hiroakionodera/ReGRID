@@ -16,6 +16,7 @@
 | `analysis_scenarios.ipynb`       | Compares results across different scenarios.|`model.py`, `analysis_system.ipynb`|
 | `analysis_potential.ipynb`       | Compares results from renewable energy potential assessmant.|-|
 | `analysis_map.ipynb`       | Visualizes municipal-level maps.|-|
+| `analysis_renewables_area.ipynb`       | Visualizes spacing area of renewables and overlap with PCAs.|`model.py`|
 
 <br>
 
