@@ -14,10 +14,11 @@ Model description is provided in [Wiki](https://github.com/hiroakionodera/ReGRID
 <br>
 
 # Applications
-| Directory | Publication | Key extension |
+| Project | Publication | Key extension |
 |---------|------------|---------------|
-| DataCenter | Strategic data center siting can mitigate dilemmas between digitalization and decarbonization (Under review) | Endogenizes the spatial siting of electricity-intensive end users within the energy transition. Quantifies marginal grid costs of end users. |
-| Conservation | Spatial strategies for reconciling area-based conservation and renewable energy transition in Japan. (In preparation) | Optimizes renewable energy deployment under area-based conservation constraints. |
+| [DataCenter](https://github.com/hiroakionodera/ReGRID/tree/main/DataCenter) | Strategic data center siting can mitigate dilemmas between digitalization and decarbonization (Under review) | Endogenizes the spatial siting of electricity-intensive end users within the energy transition. Quantifies marginal grid costs of end users. |
+| [Conservation](https://github.com/hiroakionodera/ReGRID/tree/main/Conservation) | Spatial strategies for reconciling area-based conservation and renewable energy transition in Japan. (In preparation) | Optimizes renewable energy deployment under area-based conservation constraints. |
+| [Landscape](https://github.com/hiroakionodera/ReGRID/tree/main/Landscape) | Landscape Preservation is Compatible with Cost-Effective Power Systems Decarbonization in Japan. (In preparation) | Optimizes renewable energy deployment under visual landscape constraints. |
 
 <br>
 
@@ -48,3 +49,4 @@ Note:
 [https://doi.org/10.1016/j.apenergy.2024.123118](https://doi.org/10.1016/j.apenergy.2024.123118) (Original version)
 2. Hiroaki Onodera et al.; Strategic data center siting can mitigate dilemmas between digitalization and decarbonization. Preprint. [https://www.researchsquare.com/article/rs-6707312/v2](https://www.researchsquare.com/article/rs-6707312/v2)
 3. Hiroaki Onodera et al.; Spatial strategies for reconciling area-based conservation and renewable energy transition in Japan. (In preparation)
+4. Tsamara Tsani et al.; Landscape Preservation is Compatible with Cost-Effective Power Systems Decarbonization in Japan. (In preparation)
